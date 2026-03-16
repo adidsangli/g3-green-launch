@@ -9,12 +9,12 @@ const Index = () => {
     <div className="min-h-screen flex flex-col bg-background">
       {/* Nav */}
       <nav className="flex items-center justify-between px-8 py-6 max-w-7xl mx-auto w-full">
-        <div className="flex items-center gap-4">
-          <span className="text-xl font-semibold tracking-tighter text-foreground">
+        <div className="flex items-center gap-3">
+          <span className="text-2xl font-semibold tracking-tighter text-foreground leading-none">
             G<span className="text-primary">3</span>
           </span>
-          <div className="w-px h-10 bg-border" />
-          <div className="font-mono-label text-[9px] tracking-[0.2em] uppercase leading-[1.6] text-muted-foreground">
+          <div className="w-px h-8 bg-border" />
+          <div className="font-mono-label text-[7px] tracking-[0.2em] uppercase leading-[1.8] text-muted-foreground">
             Global<br />Green<br />Grid
           </div>
         </div>
