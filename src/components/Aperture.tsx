@@ -1,144 +1,136 @@
 import { motion } from "framer-motion";
 
-const Aperture = () => {
-  // Neural network nodes in a brain-like constellation
-  const nodes = [
-    // Core cluster
-    { x: 50, y: 50, size: 8, delay: 0 },
-    // Inner ring
-    { x: 35, y: 30, size: 4, delay: 0.2 },
-    { x: 65, y: 28, size: 5, delay: 0.4 },
-    { x: 72, y: 50, size: 4, delay: 0.6 },
-    { x: 62, y: 72, size: 5, delay: 0.8 },
-    { x: 38, y: 70, size: 4, delay: 1.0 },
-    { x: 28, y: 48, size: 5, delay: 1.2 },
-    // Outer ring
-    { x: 20, y: 20, size: 3, delay: 0.3 },
-    { x: 50, y: 12, size: 3, delay: 0.5 },
-    { x: 80, y: 22, size: 3, delay: 0.7 },
-    { x: 85, y: 55, size: 3, delay: 0.9 },
-    { x: 75, y: 82, size: 3, delay: 1.1 },
-    { x: 45, y: 88, size: 3, delay: 1.3 },
-    { x: 18, y: 75, size: 3, delay: 1.5 },
-    { x: 12, y: 42, size: 3, delay: 0.1 },
-  ];
+const NODE_COUNT_OUTER = 12;
+const NODE_COUNT_MID = 8;
+const NODE_COUNT_INNER = 6;
 
-  // Connections between nodes (index pairs)
-  const connections = [
-    [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6],
-    [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 1],
-    [1, 7], [1, 8], [2, 8], [2, 9], [3, 9], [3, 10],
-    [4, 10], [4, 11], [5, 11], [5, 12], [6, 12], [6, 13], [6, 14], [1, 7],
-    [7, 8], [8, 9], [9, 10], [10, 11], [11, 12], [12, 13], [13, 14], [14, 7],
-  ];
+const getPos = (i: number, total: number, radius: number) => ({
+  x: 50 + radius * Math.cos((2 * Math.PI * i) / total - Math.PI / 2),
+  y: 50 + radius * Math.sin((2 * Math.PI * i) / total - Math.PI / 2),
+});
+
+const Aperture = () => {
+  const outerNodes = Array.from({ length: NODE_COUNT_OUTER }, (_, i) => getPos(i, NODE_COUNT_OUTER, 46));
+  const midNodes = Array.from({ length: NODE_COUNT_MID }, (_, i) => getPos(i, NODE_COUNT_MID, 32));
+  const innerNodes = Array.from({ length: NODE_COUNT_INNER }, (_, i) => getPos(i, NODE_COUNT_INNER, 18));
+  const center = { x: 50, y: 50 };
+
+  // Build connections: outer↔mid, mid↔inner, inner↔center
+  const connections: { x1: number; y1: number; x2: number; y2: number }[] = [];
+  // Outer to nearest mid
+  outerNodes.forEach((o, i) => {
+    const mi = Math.floor((i / NODE_COUNT_OUTER) * NODE_COUNT_MID);
+    connections.push({ ...o, x2: midNodes[mi].x, y2: midNodes[mi].y, x1: o.x, y1: o.y });
+    connections.push({ ...o, x2: midNodes[(mi + 1) % NODE_COUNT_MID].x, y2: midNodes[(mi + 1) % NODE_COUNT_MID].y, x1: o.x, y1: o.y });
+  });
+  // Mid to nearest inner
+  midNodes.forEach((m, i) => {
+    const ii = Math.floor((i / NODE_COUNT_MID) * NODE_COUNT_INNER);
+    connections.push({ x1: m.x, y1: m.y, x2: innerNodes[ii].x, y2: innerNodes[ii].y });
+    connections.push({ x1: m.x, y1: m.y, x2: innerNodes[(ii + 1) % NODE_COUNT_INNER].x, y2: innerNodes[(ii + 1) % NODE_COUNT_INNER].y });
+  });
+  // Inner to center
+  innerNodes.forEach((n) => {
+    connections.push({ x1: n.x, y1: n.y, x2: center.x, y2: center.y });
+  });
 
   return (
-    <div className="relative w-80 h-80 md:w-[28rem] md:h-[28rem]">
-      {/* Deep ambient glow */}
-      <div className="absolute inset-12 bg-primary rounded-full blur-[120px] opacity-10" />
+    <div className="relative w-72 h-72 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem]">
+      {/* Large ambient glow */}
+      <div className="absolute inset-8 bg-primary rounded-full blur-[100px] opacity-15 animate-pulse" />
 
-      <svg
-        viewBox="0 0 100 100"
-        className="w-full h-full"
-        fill="none"
-      >
-        {/* Connection lines with data pulse animation */}
-        {connections.map(([a, b], i) => (
-          <g key={`conn-${i}`}>
-            {/* Base line */}
+      {/* Spinning orbit rings */}
+      <div className="absolute inset-0 border border-primary/10 rounded-full animate-spin-slow" />
+      <div className="absolute inset-[18%] border border-primary/15 rounded-full animate-spin-slow-reverse" />
+      <div className="absolute inset-[34%] border border-primary/20 rounded-full animate-spin-slower" />
+
+      {/* SVG neural network overlay */}
+      <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full" fill="none">
+        {/* Data pulse connections */}
+        {connections.map((c, i) => (
+          <g key={`c-${i}`}>
+            <line x1={c.x1} y1={c.y1} x2={c.x2} y2={c.y2} stroke="hsl(160 84% 39% / 0.08)" strokeWidth="0.2" />
             <motion.line
-              x1={nodes[a].x}
-              y1={nodes[a].y}
-              x2={nodes[b].x}
-              y2={nodes[b].y}
-              stroke="hsl(160 84% 39% / 0.12)"
+              x1={c.x1} y1={c.y1} x2={c.x2} y2={c.y2}
+              stroke="hsl(160 84% 39% / 0.4)"
               strokeWidth="0.3"
-            />
-            {/* Animated pulse traveling along the line */}
-            <motion.line
-              x1={nodes[a].x}
-              y1={nodes[a].y}
-              x2={nodes[b].x}
-              y2={nodes[b].y}
-              stroke="hsl(160 84% 39% / 0.5)"
-              strokeWidth="0.4"
-              strokeDasharray="3 20"
-              animate={{
-                strokeDashoffset: [23, 0],
-              }}
-              transition={{
-                duration: 2 + (i % 3),
-                repeat: Infinity,
-                ease: "linear",
-                delay: i * 0.15,
-              }}
+              strokeDasharray="2 16"
+              animate={{ strokeDashoffset: [18, 0] }}
+              transition={{ duration: 2.5 + (i % 4) * 0.5, repeat: Infinity, ease: "linear", delay: i * 0.08 }}
             />
           </g>
         ))}
 
-        {/* Nodes */}
-        {nodes.map((node, i) => (
-          <g key={`node-${i}`}>
-            {/* Node glow */}
-            <motion.circle
-              cx={node.x}
-              cy={node.y}
-              r={node.size * 0.8}
-              fill="hsl(160 84% 39% / 0.08)"
-              animate={{
-                r: [node.size * 0.6, node.size * 1, node.size * 0.6],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                delay: node.delay,
-              }}
-            />
-            {/* Node core */}
-            <motion.circle
-              cx={node.x}
-              cy={node.y}
-              r={i === 0 ? 2.5 : node.size * 0.3}
-              fill={i === 0 ? "hsl(160 84% 39% / 0.9)" : "hsl(160 84% 39% / 0.6)"}
-              animate={{
-                opacity: [0.5, 1, 0.5],
-                r: i === 0 ? [2, 3, 2] : undefined,
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                delay: node.delay,
-              }}
-            />
-            {/* Server rack indicator on core node */}
-            {i === 0 && (
-              <>
-                <rect x={47} y={47} width={6} height={1} rx={0.3} fill="hsl(160 84% 39% / 0.7)" />
-                <rect x={47} y={49} width={6} height={1} rx={0.3} fill="hsl(160 84% 39% / 0.5)" />
-                <rect x={47} y={51} width={6} height={1} rx={0.3} fill="hsl(160 84% 39% / 0.7)" />
-              </>
-            )}
-          </g>
+        {/* Outer ring orbit */}
+        <circle cx={50} cy={50} r={46} stroke="hsl(160 84% 39% / 0.06)" strokeWidth="0.3" />
+        {/* Mid ring */}
+        <circle cx={50} cy={50} r={32} stroke="hsl(160 84% 39% / 0.08)" strokeWidth="0.3" />
+        {/* Inner ring */}
+        <circle cx={50} cy={50} r={18} stroke="hsl(160 84% 39% / 0.1)" strokeWidth="0.3" />
+
+        {/* Outer nodes */}
+        {outerNodes.map((n, i) => (
+          <motion.circle
+            key={`on-${i}`}
+            cx={n.x} cy={n.y} r={1.2}
+            fill="hsl(160 84% 39% / 0.5)"
+            animate={{ opacity: [0.3, 1, 0.3], r: [1, 1.6, 1] }}
+            transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.2 }}
+          />
         ))}
 
-        {/* "AI" label at center */}
-        <motion.text
-          x={50}
-          y={59}
-          textAnchor="middle"
-          fill="hsl(160 84% 39% / 0.4)"
-          fontSize="3"
-          fontFamily="Space Mono, monospace"
-          letterSpacing="0.15em"
-          animate={{ opacity: [0.3, 0.7, 0.3] }}
-          transition={{ duration: 4, repeat: Infinity }}
-        >
-          AI
-        </motion.text>
+        {/* Mid nodes */}
+        {midNodes.map((n, i) => (
+          <motion.circle
+            key={`mn-${i}`}
+            cx={n.x} cy={n.y} r={1.5}
+            fill="hsl(160 84% 39% / 0.65)"
+            animate={{ opacity: [0.4, 1, 0.4], r: [1.2, 2, 1.2] }}
+            transition={{ duration: 2, repeat: Infinity, delay: i * 0.25 }}
+          />
+        ))}
+
+        {/* Inner nodes */}
+        {innerNodes.map((n, i) => (
+          <motion.circle
+            key={`in-${i}`}
+            cx={n.x} cy={n.y} r={1.8}
+            fill="hsl(160 84% 39% / 0.8)"
+            animate={{ opacity: [0.5, 1, 0.5], r: [1.5, 2.5, 1.5] }}
+            transition={{ duration: 1.8, repeat: Infinity, delay: i * 0.3 }}
+          />
+        ))}
+
+        {/* Center core - large pulsing hub */}
+        <motion.circle
+          cx={50} cy={50} r={6}
+          fill="hsl(160 84% 39% / 0.06)"
+          animate={{ r: [5, 8, 5] }}
+          transition={{ duration: 3, repeat: Infinity }}
+        />
+        <motion.circle
+          cx={50} cy={50} r={4}
+          fill="hsl(160 84% 39% / 0.15)"
+          stroke="hsl(160 84% 39% / 0.4)"
+          strokeWidth="0.4"
+          animate={{ r: [3.5, 4.5, 3.5] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        />
+        {/* Server rack icon at center */}
+        <rect x={47.5} y={47.5} width={5} height={1} rx={0.3} fill="hsl(160 84% 39% / 0.7)" />
+        <rect x={47.5} y={49.2} width={5} height={1} rx={0.3} fill="hsl(160 84% 39% / 0.5)" />
+        <rect x={47.5} y={50.9} width={5} height={1} rx={0.3} fill="hsl(160 84% 39% / 0.7)" />
+        {/* Blinking LED */}
+        <motion.circle
+          cx={51.5} cy={48} r={0.4}
+          fill="hsl(160 84% 39%)"
+          animate={{ opacity: [1, 0.2, 1] }}
+          transition={{ duration: 0.8, repeat: Infinity }}
+        />
       </svg>
 
-      {/* Label */}
-      <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 font-mono-label text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
+      {/* Label beneath */}
+      <span className="absolute -bottom-10 left-1/2 -translate-x-1/2 font-mono-label text-[10px] tracking-[0.25em] uppercase text-muted-foreground whitespace-nowrap">
         AI · Data Centre · Infrastructure
       </span>
     </div>
