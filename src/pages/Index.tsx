@@ -35,7 +35,7 @@ const Index = () => {
               <span className="text-primary">Redefined.</span>
             </h1>
             <p className="mt-6 text-muted-foreground max-w-sm text-base leading-relaxed">
-              The new standard for institutional coordination. G3 is deploying in Washington, D.C.
+              Next-generation data centre infrastructure for the capital region. G3 is deploying in Washington, D.C.
             </p>
             <WaitlistForm />
           </motion.div>
