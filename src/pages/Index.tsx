@@ -45,7 +45,7 @@ const Index = () => {
             className="flex justify-center lg:justify-end"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease, delay: 0.2 }}
+            transition={{ duration: 1, ease: ease as unknown as [number, number, number, number], delay: 0.2 }}
           >
             <Aperture />
           </motion.div>
