@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import Aperture from "@/components/Aperture";
 import WaitlistForm from "@/components/WaitlistForm";
 
-const ease = [0.16, 1, 0.3, 1];
+const ease = [0.16, 1, 0.3, 1] as const;
 
 const Index = () => {
   return (
