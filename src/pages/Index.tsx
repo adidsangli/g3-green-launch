@@ -24,7 +24,7 @@ const Index = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease }}
+            transition={{ duration: 0.8, ease: ease as unknown as [number, number, number, number] }}
           >
             <p className="font-mono-label text-xs tracking-widest uppercase text-muted-foreground mb-8">
               Est. 2024 · Coming Soon
