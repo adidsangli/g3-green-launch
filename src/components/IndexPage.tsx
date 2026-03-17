@@ -80,11 +80,11 @@ export default function IndexPage() {
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           {/* Branding */}
           <div className="flex items-center gap-3">
-            <span className="text-white text-2xl font-semibold tracking-tighter leading-none">
+            <span className="text-white text-3xl font-semibold tracking-tighter leading-none">
               G<span className="text-teal-400">3</span>
             </span>
             <div className="w-px h-5 bg-teal-700/50" />
-            <Image src={logo} alt="G3" width={36} height={36} className="rounded-sm opacity-80" />
+            <Image src={logo} alt="G3" width={46} height={46} className="rounded-sm" />
           </div>
 
           {/* Links */}
