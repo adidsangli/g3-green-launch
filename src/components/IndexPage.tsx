@@ -3,88 +3,16 @@
 import { motion } from "framer-motion";
 import Aperture from "@/components/Aperture";
 import Image from "next/image";
+import { Linkedin, Twitter, Github } from "lucide-react";
 import logo from "../../public/logo.jpg";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-const FOOTER_H = 520;
-
 export default function IndexPage() {
   return (
-    <>
-      {/* Footer is fixed at the bottom, behind everything */}
-      <footer
-        className="fixed bottom-0 left-0 right-0 z-0 bg-teal-950 flex flex-col justify-between px-8 md:px-16 pt-12 pb-8"
-        style={{ height: FOOTER_H }}
-      >
-        {/* Top section: headline + columns */}
-        <div className="flex flex-col md:flex-row gap-10 md:gap-0">
-          {/* Headline + branding */}
-          <div className="md:w-1/3 flex flex-col justify-between gap-6">
-            <h2 className="text-teal-50 text-2xl md:text-3xl font-semibold tracking-tight leading-snug max-w-[220px]">
-              Building tomorrow&apos;s infrastructure, today.
-            </h2>
-            <div className="flex items-center gap-3 mt-auto">
-              <span className="text-teal-100/70 text-2xl font-semibold tracking-tighter leading-none">
-                G<span className="text-teal-400">3</span>
-              </span>
-              <div className="w-px h-6 bg-teal-700/50" />
-              <Image src={logo} alt="G3" width={40} height={40} className="rounded-sm opacity-60" />
-            </div>
-          </div>
-
-          {/* Link columns */}
-          <div className="md:flex-1 grid grid-cols-2 md:grid-cols-3 gap-8">
-            {[
-              {
-                heading: "GET IN TOUCH",
-                links: ["Join Waitlist", "Contact Us", "Request a Demo"],
-              },
-              {
-                heading: "COMPANY",
-                links: ["About G3", "Our Mission", "Press"],
-              },
-              {
-                heading: "LEGAL & PRIVACY",
-                links: ["Privacy Policy", "Terms of Use", "Cookie Policy"],
-              },
-            ].map((col) => (
-              <div key={col.heading}>
-                <p className="text-teal-400/70 text-[10px] tracking-[0.2em] uppercase font-mono mb-4">
-                  {col.heading}
-                </p>
-                <ul className="flex flex-col gap-3">
-                  {col.links.map((link) => (
-                    <li key={link}>
-                      <span className="text-teal-100/60 text-sm hover:text-teal-200 transition-colors cursor-pointer">
-                        {link}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Bottom bar */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 border-t border-teal-800/40 pt-5">
-          <p className="text-teal-100/30 text-[11px] tracking-wide">
-            © {new Date().getFullYear()} Global Green Grid. All rights reserved.
-          </p>
-          <div className="flex items-center gap-1 text-teal-100/40 text-[11px]">
-            {["Privacy", "Terms", "Contact"].map((item, i) => (
-              <span key={item} className="flex items-center gap-1">
-                {i > 0 && <span className="opacity-30">·</span>}
-                <span className="hover:text-teal-300 transition-colors cursor-pointer">{item}</span>
-              </span>
-            ))}
-          </div>
-        </div>
-      </footer>
-
-      {/* Hero — sits above the footer; scrolls away to reveal it */}
-      <div className="relative z-10 bg-background" style={{ minHeight: `calc(100vh + ${FOOTER_H}px)` }}>
+    <div className="relative">
+      {/* ── Hero ─────────────────────────────────────────────────── */}
+      <div className="relative h-screen bg-background overflow-hidden">
         {/* Nav */}
         <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[92%] md:w-[95%] max-w-10xl">
           <div className="relative flex items-center justify-between h-14 md:h-16 px-4 md:px-6 rounded-full border border-border/50 bg-background/70 backdrop-blur-xl shadow-lg">
@@ -101,9 +29,8 @@ export default function IndexPage() {
           </div>
         </nav>
 
-        {/* Main — fills exactly the viewport height */}
-        <main className="relative flex items-center justify-center md:justify-start px-6 md:px-8 w-full" style={{ height: "100vh" }}>
-          {/* Aperture animation */}
+        {/* Main content */}
+        <main className="relative flex items-center justify-center md:justify-start px-6 md:px-8 w-full h-full">
           <motion.div
             className="absolute inset-0 md:inset-auto md:right-0 md:top-24 md:bottom-0 md:w-[60%] pointer-events-none"
             initial={{ opacity: 0, scale: 0.95 }}
@@ -115,7 +42,6 @@ export default function IndexPage() {
             </div>
           </motion.div>
 
-          {/* Text content */}
           <motion.div
             className="relative z-10 w-full max-w-lg [&_h1]:m-0 [&_p]:m-0"
             initial={{ opacity: 0, y: 20 }}
@@ -141,7 +67,80 @@ export default function IndexPage() {
             </div>
           </motion.div>
         </main>
+
+        {/* Smooth gradient blend into footer — no hard edge */}
+        <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-b from-transparent to-teal-950 pointer-events-none" />
       </div>
-    </>
+
+      {/* ── Footer ───────────────────────────────────────────────── */}
+      <footer className="bg-teal-950 px-8 md:px-16 pt-12 pb-8">
+        {/* Top: headline + columns */}
+        <div className="flex flex-col md:flex-row gap-10 md:gap-0 pb-10">
+          {/* Branding */}
+          <div className="md:w-1/3 flex flex-col gap-6">
+            <h2 className="text-teal-50 text-2xl md:text-3xl font-semibold tracking-tight leading-snug max-w-[220px]">
+              Building tomorrow&apos;s infrastructure, today.
+            </h2>
+            <div className="flex items-center gap-3">
+              <span className="text-teal-100/70 text-2xl font-semibold tracking-tighter leading-none">
+                G<span className="text-teal-400">3</span>
+              </span>
+              <div className="w-px h-6 bg-teal-700/50" />
+              <Image src={logo} alt="G3" width={40} height={40} className="rounded-sm opacity-60" />
+            </div>
+          </div>
+
+          {/* Link columns */}
+          <div className="md:flex-1 grid grid-cols-2 md:grid-cols-3 gap-8">
+            {[
+              { heading: "GET IN TOUCH", links: ["Join Waitlist", "Contact Us", "Request a Demo"] },
+              { heading: "COMPANY",      links: ["About G3", "Our Mission", "Press"] },
+              { heading: "LEGAL & PRIVACY", links: ["Privacy Policy", "Terms of Use", "Cookie Policy"] },
+            ].map((col) => (
+              <div key={col.heading}>
+                <p className="text-teal-400/70 text-[10px] tracking-[0.2em] uppercase font-mono mb-4">
+                  {col.heading}
+                </p>
+                <ul className="flex flex-col gap-3">
+                  {col.links.map((link) => (
+                    <li key={link}>
+                      <span className="text-teal-100/60 text-sm hover:text-teal-200 transition-colors cursor-pointer">
+                        {link}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-t border-teal-800/40 pt-6">
+          <p className="text-teal-100/30 text-[11px] tracking-wide">
+            © {new Date().getFullYear()} Global Green Grid. All rights reserved.
+          </p>
+          <div className="flex items-center gap-1 text-teal-100/40 text-[11px]">
+            {["Privacy", "Terms", "Contact"].map((item, i) => (
+              <span key={item} className="flex items-center gap-1">
+                {i > 0 && <span className="opacity-30">·</span>}
+                <span className="hover:text-teal-300 transition-colors cursor-pointer">{item}</span>
+              </span>
+            ))}
+          </div>
+          <div className="flex items-center gap-4">
+            {[
+              { icon: Linkedin, label: "LinkedIn" },
+              { icon: Twitter,  label: "X / Twitter" },
+              { icon: Github,   label: "GitHub" },
+            ].map(({ icon: Icon, label }) => (
+              <span key={label} title={label} className="text-teal-100/30 hover:text-teal-300 transition-colors cursor-pointer">
+                <Icon size={16} />
+              </span>
+            ))}
+          </div>
+        </div>
+      </footer>
+    </div>
   );
 }
