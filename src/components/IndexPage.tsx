@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Aperture from "@/components/Aperture";
 import WaitlistForm from "@/components/WaitlistForm";
 import Image from "next/image";
+import logo from "../../public/logo.jpg";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -18,7 +19,7 @@ export default function IndexPage() {
               G<span className="text-teal-700">3</span>
             </span>
             <div className="w-px h-6 bg-border" />
-            <Image src="/logo.jpg" alt="G3" width={60} height={60} />
+            <Image src={logo} alt="G3" width={60} height={60} />
           </div>
 
           {/* Center label — hidden on small screens to prevent overflow */}
