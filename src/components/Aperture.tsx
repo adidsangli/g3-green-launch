@@ -56,14 +56,14 @@ const Aperture = () => {
       <motion.div
         className="absolute inset-0 rounded-full animate-spin-slow"
         style={{ border: "1px solid hsl(207 38% 40% / 0.15)" }}
-        animate={{ scale: [1, 1.04, 1], opacity: [0.6, 1, 0.6] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        animate={{ scale: [1, 1.028, 1], opacity: [0.45, 0.80, 0.45] }}
+        transition={{ duration: 7, repeat: Infinity, ease: [0.37, 0, 0.63, 1] }}
       />
       <motion.div
         className="absolute inset-[18%] rounded-full animate-spin-slow-reverse"
         style={{ border: "1px solid hsl(206 35% 45% / 0.20)" }}
-        animate={{ scale: [1, 1.03, 1], opacity: [0.7, 1, 0.7] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+        animate={{ scale: [1, 1.02, 1], opacity: [0.55, 0.90, 0.55] }}
+        transition={{ duration: 9, repeat: Infinity, ease: [0.37, 0, 0.63, 1], delay: 1.5 }}
       />
       <div
         className="absolute inset-[34%] rounded-full animate-spin-slower"
@@ -90,7 +90,7 @@ const Aperture = () => {
                 strokeWidth={isRose ? "0.45" : "0.35"}
                 strokeDasharray="2 16"
                 animate={{ strokeDashoffset: [18, 0] }}
-                transition={{ duration: 2.5 + (i % 4) * 0.5, repeat: Infinity, ease: "linear", delay: i * 0.08 }}
+                transition={{ duration: 3.5 + (i % 4) * 0.6, repeat: Infinity, ease: "linear", delay: i * 0.07 }}
               />
             </g>
           );
@@ -102,8 +102,8 @@ const Aperture = () => {
             key={`on-${i}`}
             cx={n.x} cy={n.y} r={1.4}
             fill={`${MIST_DIM.replace(")", " / 0.55)")}`}
-            animate={{ opacity: [0.3, 1, 0.3], r: [1.1, 1.9, 1.1] }}
-            transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.2 }}
+            animate={{ opacity: [0.3, 0.85, 0.3], r: [1.1, 1.6, 1.1] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: i * 0.22 }}
           />
         ))}
 
@@ -115,8 +115,8 @@ const Aperture = () => {
               key={`mn-${i}`}
               cx={n.x} cy={n.y} r={1.7}
               fill={isRose ? `${ROSE_BRIGHT.replace(")", " / 0.75)")}` : `${MIST_BASE.replace(")", " / 0.65)")}`}
-              animate={{ opacity: [0.4, 1, 0.4], r: isRose ? [1.3, 2.4, 1.3] : [1.2, 2.0, 1.2] }}
-              transition={{ duration: isRose ? 1.8 : 2.0, repeat: Infinity, delay: i * 0.25 }}
+              animate={{ opacity: [0.4, 0.9, 0.4], r: isRose ? [1.3, 2.1, 1.3] : [1.2, 1.8, 1.2] }}
+              transition={{ duration: isRose ? 3.2 : 3.8, repeat: Infinity, ease: "easeInOut", delay: i * 0.28 }}
             />
           );
         })}
@@ -129,8 +129,8 @@ const Aperture = () => {
               key={`in-${i}`}
               cx={n.x} cy={n.y} r={2.0}
               fill={isRose ? `${ROSE_BRIGHT.replace(")", " / 0.85)")}` : `${MIST_BASE.replace(")", " / 0.80)")}`}
-              animate={{ opacity: [0.5, 1, 0.5], r: isRose ? [1.6, 2.9, 1.6] : [1.5, 2.5, 1.5] }}
-              transition={{ duration: 1.8, repeat: Infinity, delay: i * 0.3 }}
+              animate={{ opacity: [0.5, 0.95, 0.5], r: isRose ? [1.6, 2.6, 1.6] : [1.5, 2.2, 1.5] }}
+              transition={{ duration: 3.0, repeat: Infinity, ease: "easeInOut", delay: i * 0.35 }}
             />
           );
         })}

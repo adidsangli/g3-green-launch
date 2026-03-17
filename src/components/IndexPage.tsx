@@ -3,9 +3,9 @@
 import { motion } from "framer-motion";
 import Aperture from "@/components/Aperture";
 import Image from "next/image";
-import { Linkedin, Twitter, Github } from "lucide-react";
 import logo from "../../public/logo.jpg";
 
+// Expo out — snappy entrance feel
 const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function IndexPage() {
@@ -31,22 +31,32 @@ export default function IndexPage() {
 
         {/* Main content */}
         <main className="relative flex items-center justify-center md:justify-start px-6 md:px-8 w-full h-full">
+
+          {/* Aperture — entrance fade + continuous gentle float */}
           <motion.div
             className="absolute inset-0 md:inset-auto md:right-0 md:top-24 md:bottom-0 md:w-[60%] pointer-events-none"
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: ease as unknown as [number, number, number, number], delay: 0.2 }}
+            transition={{ duration: 1.6, ease: ease as unknown as [number, number, number, number], delay: 0.15 }}
           >
-            <div className="w-full h-full opacity-[0.15] md:opacity-100">
-              <Aperture />
-            </div>
+            {/* Inner float layer — starts after entrance settles */}
+            <motion.div
+              className="w-full h-full"
+              animate={{ y: [0, -12, 0] }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1.8 }}
+            >
+              <div className="w-full h-full opacity-[0.15] md:opacity-100">
+                <Aperture />
+              </div>
+            </motion.div>
           </motion.div>
 
+          {/* Text content */}
           <motion.div
             className="relative z-10 w-full max-w-lg [&_h1]:m-0 [&_p]:m-0"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: ease as unknown as [number, number, number, number] }}
+            transition={{ duration: 1.0, ease: ease as unknown as [number, number, number, number], delay: 0.3 }}
           >
             <div className="flex flex-col items-center text-center md:items-start md:text-left">
               <p className="font-mono-label text-xs tracking-widest uppercase text-muted-foreground">
@@ -76,21 +86,18 @@ export default function IndexPage() {
         <div className="flex flex-col md:flex-row gap-10 md:gap-0 pb-10">
           {/* Branding */}
           <div className="md:w-1/3 flex flex-col gap-6">
-            <h2 className="text-teal-50 text-2xl md:text-3xl font-semibold tracking-tight leading-snug max-w-[220px]">
-              Building tomorrow&apos;s infrastructure, today.
-            </h2>
             <div className="flex items-center gap-3">
-              <span className="text-teal-100/70 text-2xl font-semibold tracking-tighter leading-none">
+              <span className="text-white text-4xl font-semibold tracking-tighter leading-none">
                 G<span className="text-teal-400">3</span>
               </span>
               <div className="w-px h-6 bg-teal-700/50" />
-              <Image src={logo} alt="G3" width={40} height={40} className="rounded-sm opacity-60" />
+              <Image src={logo} alt="G3" width={60} height={60} className="rounded-sm" />
             </div>
           </div>
 
           {/* Link columns */}
           <div className="md:flex-1 grid grid-cols-2 md:grid-cols-3 gap-8">
-            {[
+            {/* {[
               { heading: "GET IN TOUCH", links: ["Join Waitlist", "Contact Us", "Request a Demo"] },
               { heading: "COMPANY",      links: ["About G3", "Our Mission", "Press"] },
               { heading: "LEGAL & PRIVACY", links: ["Privacy Policy", "Terms of Use", "Cookie Policy"] },
@@ -109,7 +116,7 @@ export default function IndexPage() {
                   ))}
                 </ul>
               </div>
-            ))}
+            ))} */}
           </div>
         </div>
 
@@ -123,17 +130,6 @@ export default function IndexPage() {
               <span key={item} className="flex items-center gap-1">
                 {i > 0 && <span className="opacity-30">·</span>}
                 <span className="hover:text-teal-300 transition-colors cursor-pointer">{item}</span>
-              </span>
-            ))}
-          </div>
-          <div className="flex items-center gap-4">
-            {[
-              { icon: Linkedin, label: "LinkedIn" },
-              { icon: Twitter,  label: "X / Twitter" },
-              { icon: Github,   label: "GitHub" },
-            ].map(({ icon: Icon, label }) => (
-              <span key={label} title={label} className="text-teal-100/30 hover:text-teal-300 transition-colors cursor-pointer">
-                <Icon size={16} />
               </span>
             ))}
           </div>
