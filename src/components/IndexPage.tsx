@@ -68,8 +68,6 @@ export default function IndexPage() {
           </motion.div>
         </main>
 
-        {/* Smooth gradient blend into footer — no hard edge */}
-        <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-b from-transparent to-teal-950 pointer-events-none" />
       </div>
 
       {/* ── Footer ───────────────────────────────────────────────── */}
