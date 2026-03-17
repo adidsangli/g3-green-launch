@@ -7,44 +7,76 @@ import logo from "../../public/logo.jpg";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-const FOOTER_H = 220;
+const FOOTER_H = 520;
 
 export default function IndexPage() {
   return (
     <>
       {/* Footer is fixed at the bottom, behind everything */}
       <footer
-        className="fixed bottom-0 left-0 right-0 z-0 bg-teal-950 flex flex-col justify-between px-8 md:px-16 py-10"
+        className="fixed bottom-0 left-0 right-0 z-0 bg-teal-950 flex flex-col justify-between px-8 md:px-16 pt-12 pb-8"
         style={{ height: FOOTER_H }}
       >
-        <div className="flex items-start justify-between gap-8">
-          <div>
-            <p className="text-teal-300 text-xs tracking-[0.25em] uppercase font-mono mb-2">
-              Global Green Grid
-            </p>
-            <p className="text-teal-100/40 text-xs max-w-xs leading-relaxed">
-              Next-generation data centre infrastructure built for the intelligence era.
-            </p>
+        {/* Top section: headline + columns */}
+        <div className="flex flex-col md:flex-row gap-10 md:gap-0">
+          {/* Headline + branding */}
+          <div className="md:w-1/3 flex flex-col justify-between gap-6">
+            <h2 className="text-teal-50 text-2xl md:text-3xl font-semibold tracking-tight leading-snug max-w-[220px]">
+              Building tomorrow&apos;s infrastructure, today.
+            </h2>
+            <div className="flex items-center gap-3 mt-auto">
+              <span className="text-teal-100/70 text-2xl font-semibold tracking-tighter leading-none">
+                G<span className="text-teal-400">3</span>
+              </span>
+              <div className="w-px h-6 bg-teal-700/50" />
+              <Image src={logo} alt="G3" width={40} height={40} className="rounded-sm opacity-60" />
+            </div>
           </div>
-          <div className="hidden md:flex items-center gap-3">
-            <span className="text-teal-100/70 text-2xl font-semibold tracking-tighter leading-none">
-              G<span className="text-teal-400">3</span>
-            </span>
-            <div className="w-px h-6 bg-teal-700/50" />
-            <Image src={logo} alt="G3" width={44} height={44} className="rounded-sm opacity-70" />
+
+          {/* Link columns */}
+          <div className="md:flex-1 grid grid-cols-2 md:grid-cols-3 gap-8">
+            {[
+              {
+                heading: "GET IN TOUCH",
+                links: ["Join Waitlist", "Contact Us", "Request a Demo"],
+              },
+              {
+                heading: "COMPANY",
+                links: ["About G3", "Our Mission", "Press"],
+              },
+              {
+                heading: "LEGAL & PRIVACY",
+                links: ["Privacy Policy", "Terms of Use", "Cookie Policy"],
+              },
+            ].map((col) => (
+              <div key={col.heading}>
+                <p className="text-teal-400/70 text-[10px] tracking-[0.2em] uppercase font-mono mb-4">
+                  {col.heading}
+                </p>
+                <ul className="flex flex-col gap-3">
+                  {col.links.map((link) => (
+                    <li key={link}>
+                      <span className="text-teal-100/60 text-sm hover:text-teal-200 transition-colors cursor-pointer">
+                        {link}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 border-t border-teal-800/50 pt-6">
+
+        {/* Bottom bar */}
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 border-t border-teal-800/40 pt-5">
           <p className="text-teal-100/30 text-[11px] tracking-wide">
             © {new Date().getFullYear()} Global Green Grid. All rights reserved.
           </p>
-          <div className="flex gap-6">
-            {["Privacy", "Terms", "Contact"].map((item) => (
-              <span
-                key={item}
-                className="text-teal-100/40 text-[11px] tracking-wide hover:text-teal-300 transition-colors cursor-pointer"
-              >
-                {item}
+          <div className="flex items-center gap-1 text-teal-100/40 text-[11px]">
+            {["Privacy", "Terms", "Contact"].map((item, i) => (
+              <span key={item} className="flex items-center gap-1">
+                {i > 0 && <span className="opacity-30">·</span>}
+                <span className="hover:text-teal-300 transition-colors cursor-pointer">{item}</span>
               </span>
             ))}
           </div>
