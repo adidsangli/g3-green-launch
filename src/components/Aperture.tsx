@@ -53,13 +53,17 @@ const Aperture = () => {
     <div className="relative w-full h-full">
 
       {/* Spinning orbit rings — mist tones */}
-      <div
+      <motion.div
         className="absolute inset-0 rounded-full animate-spin-slow"
         style={{ border: "1px solid hsl(207 38% 40% / 0.15)" }}
+        animate={{ scale: [1, 1.04, 1], opacity: [0.6, 1, 0.6] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       />
-      <div
+      <motion.div
         className="absolute inset-[18%] rounded-full animate-spin-slow-reverse"
         style={{ border: "1px solid hsl(206 35% 45% / 0.20)" }}
+        animate={{ scale: [1, 1.03, 1], opacity: [0.7, 1, 0.7] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
       />
       <div
         className="absolute inset-[34%] rounded-full animate-spin-slower"

@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import Aperture from "@/components/Aperture";
-import WaitlistForm from "@/components/WaitlistForm";
+import Image from "next/image";
+import logo from "../../public/logo.jpg";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -25,9 +26,12 @@ export default function IndexPage() {
               Next-generation data centre infrastructure built for the intelligence era.
             </p>
           </div>
-          <div className="hidden md:flex flex-col gap-2 text-right">
-            <span className="text-teal-100/40 text-xs tracking-widest uppercase">G3</span>
-            <span className="text-teal-100/25 text-[10px]">Coming Soon</span>
+          <div className="hidden md:flex items-center gap-3">
+            <span className="text-teal-100/70 text-2xl font-semibold tracking-tighter leading-none">
+              G<span className="text-teal-400">3</span>
+            </span>
+            <div className="w-px h-6 bg-teal-700/50" />
+            <Image src={logo} alt="G3" width={44} height={44} className="rounded-sm opacity-70" />
           </div>
         </div>
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 border-t border-teal-800/50 pt-6">
@@ -102,7 +106,6 @@ export default function IndexPage() {
               <p className="font-mono-label text-xs tracking-widest uppercase text-muted-foreground">
                 AI . DATA CENTRE . INFRASTRUCTURE
               </p>
-              <WaitlistForm />
             </div>
           </motion.div>
         </main>
