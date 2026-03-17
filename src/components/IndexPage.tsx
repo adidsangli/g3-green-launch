@@ -28,7 +28,7 @@ export default function IndexPage() {
       </nav>
 
       {/* ── Hero ─────────────────────────────────────────────────── */}
-      <main className="relative flex-1 flex items-center justify-center md:justify-start px-6 md:px-8 overflow-hidden">
+      <main className="relative flex-1 flex items-center justify-center md:justify-start px-[calc(4vw+1rem)] md:px-[calc(2.5vw+1.5rem)] overflow-hidden">
 
         {/* Aperture — smaller, entrance + continuous float */}
         <motion.div
